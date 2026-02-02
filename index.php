@@ -3,12 +3,13 @@
 
   $expenseCollection = [];
   $expense_id = 0;
+  $status = true;
 
   echo "Welcome to CLI Expense Tracker\n";
   $myBudget = readline("Enter your budget first in Php: ");
 
 
-  while (true) {
+  while ($status) {
     if (is_numeric($myBudget)) {
       $myBudget = (float) $myBudget;
       showOptions();
@@ -45,7 +46,7 @@
         deleteExpenseRow();
         break;
       case 'E': case 'e':
-        echo "E option";
+        goToExit();
         break;
       default:
       echo "None of the option";
@@ -125,4 +126,7 @@
       }
     }
 
+    function goToExit () {
+      $GLOBALS["status"] = false;
+    }
 ?>

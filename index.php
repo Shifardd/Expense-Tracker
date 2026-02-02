@@ -73,13 +73,22 @@
   }
 
   function editExpenseRow () {
-    $editExpenseRow = readline("What expense row you want to change (Enter the expense_id): ");
-    if (array_key_exists($editExpenseRow, $GLOBALS["expenseCollection"])) {
-        $specificExpenseColumnEdit = readline("Choose the key you want to edit [date, description, category, amount]: ");
+    $editExpense = readline("What expense row you want to change (Enter the expense_id): ");
+    if (array_key_exists($editExpense, $GLOBALS["expenseCollection"])) {
+      getSpecificExpenseColumn($editExpense);
+    } else {
+      echo "The expense_id you gave does not exist\n";
+      editExpenseRow ();
+    }
+  }
 
-        switch ($specificExpenseColumnEdit) {
+    function getSpecificExpenseColumn ($editExpense) {
+      $specificExpenseColumnEdit = readline("Choose the key you want to edit [date, description, category, amount]: ");
+      switch ($specificExpenseColumnEdit) {
           case "date":
-            echo "Change Date\n";
+            $GLOBALS["expenseCollection"][$editExpense][$specificExpenseColumnEdit] = readline("Enter updated date: ");
+            echo "Successfully Change Date\n";
+            print_r($GLOBALS["expenseCollection"]);
             break;
           case "description":
             echo "Change Description\n";
@@ -93,8 +102,7 @@
           default:
             echo "There is no key exist\n";
             break;
-        }
-        }
+    }
     }
 
 ?>

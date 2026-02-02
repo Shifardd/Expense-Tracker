@@ -14,15 +14,11 @@
       showOptions();
       $option = readline("Enter option: ");
       goToOptions($option);
-
     } else {
       echo "Enter valid input (Numeric).\n";
       $myBudget = readline("Enter you budget first in Php: ");
     }
   }
-
-
-  echo "Your budget is $myBudget\n";
 
 
   function showOptions () {
@@ -43,7 +39,7 @@
         addExpenseRow();
         break;
       case 'C': case 'c':
-        echo "C option";
+        editExpenseRow();
         break;
       case 'D': case 'd':
         echo "D option";
@@ -75,7 +71,33 @@
       "amount" => $amount
     ];
     $GLOBALS["expense_id"]++;
+    echo "Added successfully\n";
     print_r($GLOBALS["expenseCollection"]);
   }
+
+  function editExpenseRow () {
+    $editExpenseRow = readline("What expense row you want to change (Enter the expense_id): ");
+    if (array_key_exists($editExpenseRow, $GLOBALS["expenseCollection"])) {
+        $specificExpenseColumnEdit = readline("Choose the key you want to edit [date, description, category, amount]: ");
+
+        switch ($specificExpenseColumnEdit) {
+          case "date":
+            echo "Change Date\n";
+            break;
+          case "description":
+            echo "Change Description\n";
+            break;
+          case "category":
+            echo "Change Category\n";
+            break;
+          case "amount":
+            echo "Change Amount\n";
+            break;
+          default:
+            echo "There is no key exist\n";
+            break;
+        }
+        }
+    }
 
 ?>

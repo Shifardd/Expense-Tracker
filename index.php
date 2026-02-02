@@ -14,7 +14,12 @@
       $myBudget = (float) $myBudget;
       showOptions();
       $option = readline("Enter option: ");
-      goToOptions($option);
+      $validOptions = ['a', 'b', 'c', 'd'];
+      if (in_array(strtolower($option), $validOptions)) {
+        goToOptions($option);
+      } else {
+        echo "Invalid option\n";
+      }
     } else {
       echo "Enter valid input (Numeric).\n";
       $myBudget = readline("Enter you budget first in Php: ");
@@ -32,24 +37,24 @@
   }
 
   function goToOptions ($option) {
-    switch ($option) {
-      case 'A': case 'a':
+    switch (strtolower($option)) {
+      case 'a':
         viewExpenses();
         break;
-      case 'B': case 'b':
+      case 'b':
         addExpenseRow();
         break;
-      case 'C': case 'c':
+      case 'c':
         editExpenseRow();
         break;
-      case 'D': case 'd':
+      case 'd':
         deleteExpenseRow();
         break;
-      case 'E': case 'e':
+      case 'e':
         goToExit();
         break;
       default:
-      echo "None of the option";
+        echo "None of the option";
     }
   }
 

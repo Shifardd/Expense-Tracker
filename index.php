@@ -8,13 +8,12 @@
   echo "Welcome to CLI Expense Tracker\n";
   $myBudget = readline("Enter your budget first in Php: ");
 
-
   while ($status) {
     if (is_numeric($myBudget)) {
       $myBudget = (float) $myBudget;
       showOptions();
       $option = readline("Enter option: ");
-      $validOptions = ['a', 'b', 'c', 'd'];
+      $validOptions = ['a', 'b', 'c', 'd', 'e'];
       if (in_array(strtolower($option), $validOptions)) {
         goToOptions($option);
       } else {
@@ -28,7 +27,7 @@
 
 
   function showOptions () {
-    echo "EXPENSE TRACKER\n";
+    echo "\n\nEXPENSE TRACKER\n";
     echo "A.) View Expenses\n";
     echo "B.) Add Expenses\n";
     echo "C.) Edit Expense\n";
@@ -58,8 +57,15 @@
     }
   }
 
+  function saveDataInJSON () {
+    $jsonData = json_encode($GLOBALS["expenseCollection"], JSON_PRETTY_PRINT);
+    echo $jsonData;
+    $file_path = 'expenses.json';
+    file_put_contents($file_path, $jsonData);
+  }
+
   function viewExpenses () {
-    print_r($GLOBALS["expenseCollection"]);
+    saveDataInJSON();
   }
 
   function addExpenseRow () {
@@ -75,7 +81,7 @@
     ];
     $GLOBALS["expense_id"]++;
     echo "Added successfully\n";
-    print_r($GLOBALS["expenseCollection"]);
+    saveDataInJSON();
   }
 
   function editExpenseRow () {
@@ -89,42 +95,42 @@
     }
   }
 
-    function getSpecificExpenseColumn ($editExpense) {
-      $specificExpenseColumnEdit = readline("Choose the key you want to edit [date, description, category, amount]: ");
-      switch ($specificExpenseColumnEdit) {
-          case "date":
-            $GLOBALS["expenseCollection"][$editExpense][$specificExpenseColumnEdit] = readline("Enter updated date: ");
-            echo "Successfully Change Date\n";
-            print_r($GLOBALS["expenseCollection"]);
-            break;
-          case "description":
-            $GLOBALS["expenseCollection"][$editExpense][$specificExpenseColumnEdit] = readline("Enter updated description: ");
-            echo "Successfully Change Description\n";
-            print_r($GLOBALS["expenseCollection"]);
-            break;
-          case "category":
-            $GLOBALS["expenseCollection"][$editExpense][$specificExpenseColumnEdit] = readline("Enter updated category: ");
-            echo "Successfully Change Category\n";
-            print_r($GLOBALS["expenseCollection"]);
-            break;
-          case "amount":
-            $GLOBALS["expenseCollection"][$editExpense][$specificExpenseColumnEdit] = readline("Enter updated amount: ");
-            echo "Successfully Change Date\n";
-            print_r($GLOBALS["expenseCollection"]);
-            break;
-          default:
-            echo "There is no key exist\n";
-            getSpecificExpenseColumn($editExpense);
-            break;
+  function getSpecificExpenseColumn ($editExpense) {
+    $specificExpenseColumnEdit = readline("Choose the key you want to edit [date, description, category, amount]: ");
+    switch ($specificExpenseColumnEdit) {
+        case "date":
+          $GLOBALS["expenseCollection"][$editExpense][$specificExpenseColumnEdit] = readline("Enter updated date: ");
+          echo "Successfully Change Date\n";
+          saveDataInJSON();
+          break;
+        case "description":
+          $GLOBALS["expenseCollection"][$editExpense][$specificExpenseColumnEdit] = readline("Enter updated description: ");
+          echo "Successfully Change Description\n";
+          saveDataInJSON();
+          break;
+        case "category":
+          $GLOBALS["expenseCollection"][$editExpense][$specificExpenseColumnEdit] = readline("Enter updated category: ");
+          echo "Successfully Change Category\n";
+          saveDataInJSON();
+          break;
+        case "amount":
+          $GLOBALS["expenseCollection"][$editExpense][$specificExpenseColumnEdit] = readline("Enter updated amount: ");
+          echo "Successfully Change Date\n";
+          saveDataInJSON();
+          break;
+        default:
+          echo "There is no key exist\n";
+          getSpecificExpenseColumn($editExpense);
+          break;
     }
-    }
+  }
 
     function deleteExpenseRow () {
       print_r($GLOBALS["expenseCollection"]);
       $deleteExpense = readline("Enter expense_id you want to delete: ");
       if (array_key_exists($deleteExpense, $GLOBALS["expenseCollection"])) {
         unset($GLOBALS["expenseCollection"][$deleteExpense]);
-        print_r($GLOBALS["expenseCollection"]);
+        saveDataInJSON();
       } else {
         echo "The expense_id you gave does not exist\n";
         deleteExpenseRow();

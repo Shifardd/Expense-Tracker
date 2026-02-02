@@ -91,13 +91,19 @@
             print_r($GLOBALS["expenseCollection"]);
             break;
           case "description":
-            echo "Change Description\n";
+            $GLOBALS["expenseCollection"][$editExpense][$specificExpenseColumnEdit] = readline("Enter updated description: ");
+            echo "Successfully Change Description\n";
+            print_r($GLOBALS["expenseCollection"]);
             break;
           case "category":
-            echo "Change Category\n";
+            $GLOBALS["expenseCollection"][$editExpense][$specificExpenseColumnEdit] = readline("Enter updated category: ");
+            echo "Successfully Change Category\n";
+            print_r($GLOBALS["expenseCollection"]);
             break;
           case "amount":
-            echo "Change Amount\n";
+            $GLOBALS["expenseCollection"][$editExpense][$specificExpenseColumnEdit] = readline("Enter updated amount: ");
+            echo "Successfully Change Date\n";
+            print_r($GLOBALS["expenseCollection"]);
             break;
           default:
             echo "There is no key exist\n";

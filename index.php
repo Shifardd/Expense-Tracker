@@ -7,6 +7,17 @@
 
   echo "Welcome to CLI Expense Tracker\n";
   $myBudget = readline("Enter your budget first in Php: ");
+  $remainingMoney = $myBudget;
+  $totalExpenses = 0;
+
+  $expenseCollection = [
+    "budget" => $myBudget,
+    "Remaining Money" => $remainingMoney,
+    "Total Expenses" => $totalExpenses
+  ];
+
+  saveDataInJSON();
+
 
   while ($status) {
     if (is_numeric($myBudget)) {
@@ -81,6 +92,7 @@
     ];
     $GLOBALS["expense_id"]++;
     echo "Added successfully\n";
+    getTotalExpenses();
     saveDataInJSON();
   }
 
@@ -101,21 +113,25 @@
         case "date":
           $GLOBALS["expenseCollection"][$editExpense][$specificExpenseColumnEdit] = readline("Enter updated date: ");
           echo "Successfully Change Date\n";
+          getTotalExpenses();
           saveDataInJSON();
           break;
         case "description":
           $GLOBALS["expenseCollection"][$editExpense][$specificExpenseColumnEdit] = readline("Enter updated description: ");
           echo "Successfully Change Description\n";
+          getTotalExpenses();
           saveDataInJSON();
           break;
         case "category":
           $GLOBALS["expenseCollection"][$editExpense][$specificExpenseColumnEdit] = readline("Enter updated category: ");
           echo "Successfully Change Category\n";
+          getTotalExpenses();
           saveDataInJSON();
           break;
         case "amount":
           $GLOBALS["expenseCollection"][$editExpense][$specificExpenseColumnEdit] = readline("Enter updated amount: ");
           echo "Successfully Change Date\n";
+          getTotalExpenses();
           saveDataInJSON();
           break;
         default:
@@ -139,5 +155,25 @@
 
     function goToExit () {
       $GLOBALS["status"] = false;
+    }
+
+    function getTotalExpenses () {
+      $GLOBALS["totalExpenses"] = 0;
+      foreach ($GLOBALS["expenseCollection"] as $expenses) {
+        foreach($expenses as $key => $value) {
+          if ($key == "amount") {
+            $GLOBALS["totalExpenses"] += $value;
+          }
+        }
+      }
+      $GLOBALS["expenseCollection"] ["Remaining Money"] = $GLOBALS["myBudget"] - $GLOBALS["totalExpenses"];
+
+      $GLOBALS["expenseCollection"] ["Total Expenses"] = $GLOBALS["totalExpenses"];
+
+      if ($GLOBALS["totalExpenses"] > $GLOBALS["myBudget"]) {
+        echo "\nYour total expenses is higher than your budget\n";
+        echo "Budget: " . $GLOBALS["myBudget"] . "\n";
+        echo "Your total expenses " . $GLOBALS["totalExpenses"] . "\n";
+      }
     }
 ?>

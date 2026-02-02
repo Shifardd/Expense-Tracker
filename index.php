@@ -24,7 +24,7 @@
       $myBudget = (float) $myBudget;
       showOptions();
       $option = readline("Enter option: ");
-      $validOptions = ['a', 'b', 'c', 'd', 'e'];
+      $validOptions = ['a', 'b', 'c', 'd', 'quit'];
       if (in_array(strtolower($option), $validOptions)) {
         goToOptions($option);
       } else {
@@ -43,7 +43,7 @@
     echo "B.) Add Expenses\n";
     echo "C.) Edit Expense\n";
     echo "D.) Delete Expense\n";
-    echo "E.) Exit\n";
+    echo "Type `quit` to exit\n";
   }
 
   function goToOptions ($option) {
@@ -60,7 +60,7 @@
       case 'd':
         deleteExpenseRow();
         break;
-      case 'e':
+      case 'quit':
         goToExit();
         break;
       default:
@@ -154,7 +154,10 @@
     }
 
     function goToExit () {
-      $GLOBALS["status"] = false;
+      $confirmationToExit = readline("Do you want to exit (y for yes): ");
+      if ($confirmationToExit == 'y' || $confirmationToExit ==  'Y') {
+        $GLOBALS["status"] = false;
+      } 
     }
 
     function getTotalExpenses () {

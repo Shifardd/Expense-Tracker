@@ -5,7 +5,7 @@
   $expense_id = 0;
 
   echo "Welcome to CLI Expense Tracker\n";
-  $myBudget = readline("Enter you budget first in Php: ");
+  $myBudget = readline("Enter your budget first in Php: ");
 
 
   while (true) {
@@ -42,7 +42,7 @@
         editExpenseRow();
         break;
       case 'D': case 'd':
-        echo "D option";
+        deleteExpenseRow();
         break;
       case 'E': case 'e':
         echo "E option";
@@ -73,6 +73,7 @@
   }
 
   function editExpenseRow () {
+    print_r($GLOBALS["expenseCollection"]);
     $editExpense = readline("What expense row you want to change (Enter the expense_id): ");
     if (array_key_exists($editExpense, $GLOBALS["expenseCollection"])) {
       getSpecificExpenseColumn($editExpense);
@@ -107,8 +108,21 @@
             break;
           default:
             echo "There is no key exist\n";
+            getSpecificExpenseColumn($editExpense);
             break;
     }
+    }
+
+    function deleteExpenseRow () {
+      print_r($GLOBALS["expenseCollection"]);
+      $deleteExpense = readline("Enter expense_id you want to delete: ");
+      if (array_key_exists($deleteExpense, $GLOBALS["expenseCollection"])) {
+        unset($GLOBALS["expenseCollection"][$deleteExpense]);
+        print_r($GLOBALS["expenseCollection"]);
+      } else {
+        echo "The expense_id you gave does not exist\n";
+        deleteExpenseRow();
+      }
     }
 
 ?>

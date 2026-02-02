@@ -54,9 +54,6 @@
 
   function viewExpenses () {
     print_r($GLOBALS["expenseCollection"]);
-    showOptions();
-    $option = readline("Enter options: ");
-    goToOptions($option);
   }
 
   function addExpenseRow () {
